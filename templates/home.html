@@ -80,6 +80,7 @@
 <table class="sortable" style="width: 50%; margin: 0 auto">
     <thead>
     <tr>
+        <th>#</th>
         <th>URL</th>
         <th>Seeds</th>
         <th>Peers</th>
@@ -90,6 +91,7 @@
 
     {% for record in records %}
         <tr>
+            <td>{{ loop.index }}</td>
             <td><a href="{{ record.url }}">{{ record.url }}</a></td>
             <td>{{ record.seeds }}</td>
             <td>{{ record.peers }}</td>
