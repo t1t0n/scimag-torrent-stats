@@ -1,0 +1,25 @@
+version: "3.2"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: web.Dockerfile
+    volumes:
+    - .:/app
+    ports:
+    - "5000:5000"
+  worker:
+    build:
+      context: .
+      dockerfile: worker.Dockerfile
+  mongo:
+    image: mongo:4.4.6-bionic
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+
+volumes:
+  mongo-data:

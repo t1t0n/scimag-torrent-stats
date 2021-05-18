@@ -1,0 +1,4 @@
+beautifulsoup4
+requests
+git+https://github.com/fuzeman/bencode.py.git
+pymongo
