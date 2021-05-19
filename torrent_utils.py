@@ -27,7 +27,8 @@ def get_torrent_stats(url):
         result = scrape(tracker_url, [info_hash])
         if not result:
             continue
-
+        if result[info_hash]['seeds'] is None or result[info_hash]['peers'] is None:
+            continue
         stats['seeds'] = max(stats['seeds'], result[info_hash]['seeds'])
         stats['peers'] = max(stats['peers'], result[info_hash]['peers'])
     stats['size_gb' ] = size
