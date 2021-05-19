@@ -10,7 +10,12 @@ from scraper import scrape
 def get_torrent_stats(url):
     response = requests.get(url)
     data = bencodepy.decode(response.content)
-
+    files = data[b'info'][b'files']
+    size = 0
+    for file in files:
+        size+=file[b'length']
+    size = size*1e-9
+    size = round(size, 2)
     info_hash = hashlib.sha1(bencodepy.bencode(data[b"info"])).hexdigest()
 
     trackers_list = data[b'announce-list']
@@ -25,6 +30,7 @@ def get_torrent_stats(url):
 
         stats['seeds'] = max(stats['seeds'], result[info_hash]['seeds'])
         stats['peers'] = max(stats['peers'], result[info_hash]['peers'])
+    stats['size_gb' ] = size
     return stats
 
 

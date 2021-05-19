@@ -84,7 +84,8 @@
         <th>URL</th>
         <th>Seeds</th>
         <th>Peers</th>
-
+        <th>Size (GB)</th>
+        <th>Last Modified (UTC)</th>
     </tr>
     </thead>
     <tbody>
@@ -95,7 +96,17 @@
             <td><a href="{{ record.url }}">{{ record.url }}</a></td>
             <td>{{ record.seeds }}</td>
             <td>{{ record.peers }}</td>
+            {% if record.size_gb is defined %}
+                <td>{{ record.size_gb }}</td>
+            {% else %}
+                <td>N/A<p style="font-size:0.5em">(Will be added at the next scrape)</p></td>
+            {% endif %}
 
+            {% if record.last_modified is defined %}
+                <td>{{ record.last_modified.strftime("%Y/%m/%d %H:%M:%S") }}</td>
+            {% else %}
+                <td>N/A<p style="font-size:0.5em">(Will be added at the next scrape)</p></td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>

@@ -1,9 +1,22 @@
+import datetime
+
 import pymongo
 
 def upsert_torrent_stats(url, stats):
     client = pymongo.MongoClient("mongodb://root:root@mongo:27017/")
     db = client.scimag
-    db.torrent_stats.update_one({'url':url}, {'$set':{'url':url, 'seeds':stats['seeds'], 'peers':stats['peers']}}, upsert=True)
+    db.torrent_stats.update_one(
+        {'url':url},
+        {'$set':
+            {
+                'url':url,
+                'seeds':stats['seeds'],
+                'peers':stats['peers'],
+                'size_gb': stats['size_gb'],
+                "last_modified": datetime.datetime.utcnow()
+            }
+        },
+        upsert=True)
     return True
 
 def get_torrent_stats():
